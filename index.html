@@ -1,12 +1,31 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex's Random Trivia</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Welcome to my website!</h1>
-  <p>hello this is my new website!</p>
-  <p>I love HTML 👍</p>
+  <main class="start-screen">
+    <!-- Top bar from your wireframe -->
+    <header class="top-bar">
+      <h1>Alex's Random Trivia</h1>
+    </header>
+
+    <!-- Center content with name input and join button -->
+    <section class="center-content">
+      <form id="login-form">
+        <label for="username" class="sr-only">Enter Username</label>
+        <input type="text" id="username" placeholder="Nickname" required aria-required="true">
+        <button type="button" class="btn-primary">JOIN GAME</button>
+      </form>
+    </section>
+
+    <!-- Bottom bar from your wireframe -->
+    <footer class="bottom-bar">
+      <h2>Test your speed!</h2>
+    </footer>
+  </main>
 </body>
 </html>
