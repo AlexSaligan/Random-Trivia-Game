@@ -7,10 +7,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <main>
     
-    <!-- LOBBY  -->
+    <!-- LOBBY SCREEN -->
     <section id="screen-lobby" class="screen active">
       <header class="top-bar">
         <h1>Alex's Random Trivia</h1>
@@ -20,9 +19,7 @@
         <form id="login-form">
           <label for="username" class="sr-only">Enter Username</label>
           <input type="text" id="username" placeholder="Nickname" required aria-required="true">
-          
           <p style="font-size: 0.8rem; color: #ccc;">Your nickname is only saved locally on your device.</p>
-          
           <button type="submit" class="btn-primary" id="join-btn">JOIN GAME</button>
         </form>
       </div>
@@ -32,34 +29,46 @@
       </footer>
     </section>
 
-    <!-- GAMEPLAY -->
+    <!-- GAMEPLAY SCREEN -->
     <section id="screen-gameplay" class="screen hidden">
-      <header class="top-bar">
-        <h2 aria-live="polite">Timer: <span id="time-display">10</span>s</h2>
+      <header class="top-bar split-bar">
+        <h2>SCORE: <span id="score-display">0</span></h2>
+        <h2 aria-live="polite">TIMER: <span id="time-display">10</span>s</h2>
       </header>
       
       <div class="center-content">
         <div id="question-box" class="question-card" aria-live="assertive">
-          What is the capital of Indiana?
+          Question Text Goes Here
         </div>
         
         <div class="answer-grid">
-          <button class="answer-btn" data-index="0">Indianapolis</button>
-          <button class="answer-btn" data-index="1">Fort Wayne</button>
-          <button class="answer-btn" data-index="2">Evansville</button>
-          <button class="answer-btn" data-index="3">Carmel</button>
+          <button class="answer-btn" data-index="0">Answer 1</button>
+          <button class="answer-btn" data-index="1">Answer 2</button>
+          <button class="answer-btn" data-index="2">Answer 3</button>
+          <button class="answer-btn" data-index="3">Answer 4</button>
         </div>
       </div>
       
-      <footer class="bottom-bar split-bar">
-        <p>Score: <span id="score-display">0</span></p>
-        <p>Question <span id="question-number">1</span> / 10</p>
+      <footer class="bottom-bar">
+        <h2>QUESTION <span id="question-number">1</span> / 5</h2>
       </footer>
+    </section>
+
+    <!-- LEADERBOARD SCREEN -->
+    <section id="screen-leaderboard" class="screen hidden">
+      <header class="top-bar">
+        <h2>TOP SCORES</h2>
+      </header>
+      
+      <div class="center-content">
+        <h1 style="margin-bottom: 20px;">GAME OVER!</h1>
+        <h2 style="margin-bottom: 40px;">YOUR SCORE: <span id="final-score">0</span></h2>
+        <button id="play-again-btn" class="btn-primary">PLAY AGAIN</button>
+      </div>
     </section>
 
   </main>
   
-  <!-- Link to JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
