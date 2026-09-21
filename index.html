@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
+
   <main>
-    <section class="start-screen screen active">
+    
+    <!-- LOBBY  -->
+    <section id="screen-lobby" class="screen active">
       <header class="top-bar">
         <h1>Alex's Random Trivia</h1>
       </header>
@@ -19,10 +21,9 @@
           <label for="username" class="sr-only">Enter Username</label>
           <input type="text" id="username" placeholder="Nickname" required aria-required="true">
           
-          
           <p style="font-size: 0.8rem; color: #ccc;">Your nickname is only saved locally on your device.</p>
           
-          <button type="button" class="btn-primary" id="join-btn">JOIN GAME</button>
+          <button type="submit" class="btn-primary" id="join-btn">JOIN GAME</button>
         </form>
       </div>
       
@@ -31,7 +32,7 @@
       </footer>
     </section>
 
-    <!-- GAMEPLAY SCREEN -->
+    <!-- GAMEPLAY -->
     <section id="screen-gameplay" class="screen hidden">
       <header class="top-bar">
         <h2 aria-live="polite">Timer: <span id="time-display">10</span>s</h2>
@@ -55,6 +56,10 @@
         <p>Question <span id="question-number">1</span> / 10</p>
       </footer>
     </section>
+
   </main>
+  
+  <!-- Link to JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
