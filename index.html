@@ -7,25 +7,54 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="start-screen">
-    <!-- Top bar from your wireframe -->
-    <header class="top-bar">
-      <h1>Alex's Random Trivia</h1>
-    </header>
-
-    <!-- Center content with name input and join button -->
-    <section class="center-content">
-      <form id="login-form">
-        <label for="username" class="sr-only">Enter Username</label>
-        <input type="text" id="username" placeholder="Nickname" required aria-required="true">
-        <button type="button" class="btn-primary">JOIN GAME</button>
-      </form>
+  
+  <main>
+    <section class="start-screen screen active">
+      <header class="top-bar">
+        <h1>Alex's Random Trivia</h1>
+      </header>
+      
+      <div class="center-content">
+        <form id="login-form">
+          <label for="username" class="sr-only">Enter Username</label>
+          <input type="text" id="username" placeholder="Nickname" required aria-required="true">
+          
+          
+          <p style="font-size: 0.8rem; color: #ccc;">Your nickname is only saved locally on your device.</p>
+          
+          <button type="button" class="btn-primary" id="join-btn">JOIN GAME</button>
+        </form>
+      </div>
+      
+      <footer class="bottom-bar">
+        <h2>Test your speed!</h2>
+      </footer>
     </section>
 
-    <!-- Bottom bar from your wireframe -->
-    <footer class="bottom-bar">
-      <h2>Test your speed!</h2>
-    </footer>
+    <!-- GAMEPLAY SCREEN -->
+    <section id="screen-gameplay" class="screen hidden">
+      <header class="top-bar">
+        <h2 aria-live="polite">Timer: <span id="time-display">10</span>s</h2>
+      </header>
+      
+      <div class="center-content">
+        <div id="question-box" class="question-card" aria-live="assertive">
+          What is the capital of Indiana?
+        </div>
+        
+        <div class="answer-grid">
+          <button class="answer-btn" data-index="0">Indianapolis</button>
+          <button class="answer-btn" data-index="1">Fort Wayne</button>
+          <button class="answer-btn" data-index="2">Evansville</button>
+          <button class="answer-btn" data-index="3">Carmel</button>
+        </div>
+      </div>
+      
+      <footer class="bottom-bar split-bar">
+        <p>Score: <span id="score-display">0</span></p>
+        <p>Question <span id="question-number">1</span> / 10</p>
+      </footer>
+    </section>
   </main>
 </body>
 </html>
