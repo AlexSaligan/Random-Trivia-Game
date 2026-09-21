@@ -8,13 +8,12 @@ const maxQuestions = 5;
 
 // SAMPLE QUESTIONS
 const questions = [
-  { q: "What is the capital of Indiana?", options: ["Indianapolis", "Fort Wayne", "Evansville", "Carmel"], answer: 0 },
-  { q: "Which property changes the background color in CSS?", options: ["color", "bgcolor", "background-color", "background"], answer: 2 },
-  { q: "What symbol indicates an ID selector in CSS?", options: [".", "#", "*", ">"], answer: 1 },
-  { q: "Which keyword declares a variable in JavaScript?", options: ["var", "let", "const", "All of the above"], answer: 3 },
-  { q: "What function sets a timer in JS?", options: ["setTimeout", "setInterval", "setTimer", "timeOut"], answer: 1 }
+  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 0 },
+  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 2 },
+  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 1 },
+  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 3 },
+  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 1 }
 ];
-
 
 const loginForm = document.getElementById('login-form');
 const usernameInput = document.getElementById('username');
