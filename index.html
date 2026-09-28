@@ -3,38 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alex's Random Trivia - Test your knowledge with fast-paced general trivia questions, speed scoring, and live leaderboards.">
   <title>Alex's Random Trivia</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  
+  <header class="top-bar">
+    <div class="header-content">
+      <!-- Image 1  -->
+      <a href="#screen-lobby" class="logo-link">
+        <img src="images/logo.png" alt="Alex's Random Trivia Game Logo" id="site-logo">
+      </a>
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><button type="button" class="nav-btn" data-target="screen-lobby">Lobby</button></li>
+          <li><button type="button" class="nav-btn" data-target="screen-rules">Rules</button></li>
+          <li><button type="button" class="nav-btn" data-target="screen-leaderboard">Leaderboard</button></li>
+          <li><button type="button" class="nav-btn" data-target="screen-stats">Stats</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
   <main>
     
-    <!-- LOBBY -->
+    <!--LOBBY SCREEN -->
     <section id="screen-lobby" class="screen active">
-      <header class="top-bar">
-        <h1>Alex's Random Trivia</h1>
-      </header>
-      
       <div class="center-content">
-        <form id="login-form">
+        <h1>Alex's Random Trivia</h1>
+        <p class="subtitle">Test your speed and general knowledge!</p>
+
+        <form id="login-form" novalidate>
           <label for="username" class="sr-only">Enter Username</label>
-          <input type="text" id="username" placeholder="Nickname" required aria-required="true">
-          <p style="font-size: 0.8rem; color: #ccc;">Your nickname is only saved locally on your device.</p>
+          <input type="text" id="username" name="username" placeholder="Enter Nickname" required minlength="2" maxlength="15" aria-required="true">
+          
+          <p class="gdpr-text">Your nickname is only saved locally on your device.</p>
+          
+          <div id="form-error" class="error-msg" aria-live="polite"></div>
+          <div id="form-success" class="success-msg" aria-live="polite"></div>
+
           <button type="submit" class="btn-primary" id="join-btn">JOIN GAME</button>
         </form>
       </div>
-      
-      <footer class="bottom-bar">
-        <h2>Test your speed!</h2>
-      </footer>
     </section>
 
-    <!-- GAMEPLAY -->
+    <!-- RULES SCREEN -->
+    <section id="screen-rules" class="screen hidden">
+      <div class="center-content">
+        <h2>How to Play</h2>
+        <p>Answer questions as quickly as possible before the 10-second timer runs out!</p>
+        
+        <!-- HTML Table -->
+        <table class="scoring-table">
+          <caption>Point Breakdown</caption>
+          <thead>
+            <tr>
+              <th scope="col">Time Remaining</th>
+              <th scope="col">Base Points</th>
+              <th scope="col">Speed Bonus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>7–10 seconds</td>
+              <td>100 pts</td>
+              <td>+50 pts</td>
+            </tr>
+            <tr>
+              <td>4–6 seconds</td>
+              <td>100 pts</td>
+              <td>+25 pts</td>
+            </tr>
+            <tr>
+              <td>1–3 seconds</td>
+              <td>100 pts</td>
+              <td>+0 pts</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- GAMEPLAY SCREEN -->
     <section id="screen-gameplay" class="screen hidden">
-      <header class="top-bar split-bar">
+      <div class="game-header split-bar">
         <h2>SCORE: <span id="score-display">0</span></h2>
         <h2 aria-live="polite">TIMER: <span id="time-display">10</span>s</h2>
-      </header>
+      </div>
+
+      <!-- Images 2 3 4  -->
+      <div class="category-icons">
+        <img src="images/icon-science.png" alt="Science trivia category icon" class="cat-icon">
+        <img src="images/icon-history.png" alt="History trivia category icon" class="cat-icon">
+        <img src="images/icon-pop.png" alt="Pop culture trivia category icon" class="cat-icon">
+      </div>
       
       <div class="center-content">
         <div id="question-box" class="question-card" aria-live="assertive">
@@ -42,21 +106,82 @@
         </div>
         
         <div class="answer-grid">
-          <button class="answer-btn" data-index="0">Answer 1</button>
-          <button class="answer-btn" data-index="1">Answer 2</button>
-          <button class="answer-btn" data-index="2">Answer 3</button>
-          <button class="answer-btn" data-index="3">Answer 4</button>
+          <button type="button" class="answer-btn" data-index="0">Answer 1</button>
+          <button type="button" class="answer-btn" data-index="1">Answer 2</button>
+          <button type="button" class="answer-btn" data-index="2">Answer 3</button>
+          <button type="button" class="answer-btn" data-index="3">Answer 4</button>
         </div>
       </div>
       
-      <footer class="bottom-bar">
+      <footer class="game-footer">
         <h2>QUESTION <span id="question-number">1</span> / 5</h2>
       </footer>
     </section>
 
-   
+    <!-- LEADERBOARD SCREEN -->
+    <section id="screen-leaderboard" class="screen hidden">
+      <div class="center-content">
+        <h2>TOP SCORES</h2>
+        
+        <div class="podium">
+          <div class="place second">
+            <span class="name" id="podium-2-name">-</span>
+            <div class="block">2ND</div>
+          </div>
+          <div class="place first">
+            <span class="name" id="podium-1-name">-</span>
+            <div class="block">1ST</div>
+          </div>
+          <div class="place third">
+            <span class="name" id="podium-3-name">-</span>
+            <div class="block">3RD</div>
+          </div>
+        </div>
+
+        <div class="top-ten">
+          <h3>4th - 10th Place</h3>
+          <!-- HTML List-->
+          <ol id="leaderboard-list" start="4"></ol>
+        </div>
+
+        <div id="final-message-box">
+          <p id="final-message">YOUR SCORE: <span id="final-score">0</span></p>
+          <button type="button" id="play-again" class="btn-primary">PLAY AGAIN</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS & ACHIEVEMENTS SCREEN -->
+    <section id="screen-stats" class="screen hidden">
+      <div class="center-content">
+        <h2>Game Stats & Achievements</h2>
+        <p>Track your lifetime progress and unlocked badges:</p>
+        
+        <div class="stats-card">
+          <p>Total Games Played: <strong id="stat-games">0</strong></p>
+          <p>Highest Score Recorded: <strong id="stat-high-score">0</strong></p>
+        </div>
+
+        <h3>Unlocked Badges</h3>
+        <ul class="badge-list">
+          <li class="badge-item">🏆 <strong>First Steps:</strong> Played your first trivia round</li>
+          <li class="badge-item">⚡ <strong>Speed Demon:</strong> Answered a question in under 3 seconds</li>
+          <li class="badge-item">🌟 <strong>Top Rank:</strong> Reached the Top 3 on the Leaderboard</li>
+        </ul>
+      </div>
+    </section>
 
   </main>
+
+  <!-- 3 External Links Footer -->
+  <footer class="bottom-bar">
+    <p>&copy; Alex's Random Trivia | External Links:</p>
+    <div class="footer-links">
+      <a href="https://opentdb.com/" target="_blank" rel="noopener">OpenTDB API</a> |
+      <a href="https://validator.w3.org/" target="_blank" rel="noopener">W3C HTML Validator</a> |
+      <a href="https://jigsaw.w3.org/css-validator/" target="_blank" rel="noopener">W3C CSS Validator</a>
+    </div>
+  </footer>
   
   <script src="script.js"></script>
 </body>
