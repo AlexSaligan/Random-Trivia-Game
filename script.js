@@ -1,4 +1,3 @@
-
 let currentPlayer = "";
 let score = 0;
 let currentQuestionIndex = 0;
@@ -24,13 +23,16 @@ const scoreDisplay = document.getElementById("score-display");
 const questionNumber = document.getElementById("question-number");
 const questionBox = document.getElementById("question-box");
 const answerBtns = document.querySelectorAll(".answer-btn");
+const playAgainBtn = document.getElementById("play-again-btn");
 
 document.addEventListener("DOMContentLoaded", () => {
+
   document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const targetId = e.target.getAttribute("data-target");
       switchScreen(targetId);
       if (targetId === "screen-stats") renderStats();
+      if (targetId === "screen-leaderboard") renderLeaderboard();
     });
   });
 
@@ -50,13 +52,18 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         formSuccess.textContent = "";
         startGame();
-      }, 1000);
+      }, 800);
     }
   });
 
-  document.getElementById("play-again").addEventListener("click", () => {
-    switchScreen("screen-lobby");
-  });
+  if (playAgainBtn) {
+    playAgainBtn.addEventListener("click", () => {
+      switchScreen("screen-lobby");
+      usernameInput.value = "";
+    });
+  }
+
+  renderLeaderboard();
 });
 
 function switchScreen(screenId) {
@@ -117,21 +124,21 @@ function handleAnswer(selectedIndex, correctIndex) {
   
   scoreDisplay.textContent = score;
   currentQuestionIndex++;
-  setTimeout(loadQuestion, 500); 
+  setTimeout(loadQuestion, 400); 
 }
 
 function endGame() {
-  switchScreen("screen-leaderboard");
   saveScore();
   renderLeaderboard();
   document.getElementById("final-score").textContent = score;
+  switchScreen("screen-leaderboard");
 }
 
 function saveScore() {
   const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
   highScores.push({ name: currentPlayer, score: score });
   highScores.sort((a, b) => b.score - a.score);
-  localStorage.setItem("triviaScores", JSON.stringify(highScores));
+  localStorage.setItem("triviaScores", JSON.stringify(highScores.slice(0, 10)));
 
   let totalGames = parseInt(localStorage.getItem("totalGames") || "0", 10);
   localStorage.setItem("totalGames", totalGames + 1);
@@ -140,17 +147,20 @@ function saveScore() {
 function renderLeaderboard() {
   const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
   
-  document.getElementById("podium-1-name").textContent = highScores[0] ? `${highScores[0].name}\n(${highScores[0].score} pts)` : "-";
-  document.getElementById("podium-2-name").textContent = highScores[1] ? `${highScores[1].name}\n(${highScores[1].score} pts)` : "-";
-  document.getElementById("podium-3-name").textContent = highScores[2] ? `${highScores[2].name}\n(${highScores[2].score} pts)` : "-";
+  document.getElementById("podium-1-name").textContent = highScores[0] ? `${highScores[0].name} (${highScores[0].score} pts)` : "-";
+  document.getElementById("podium-2-name").textContent = highScores[1] ? `${highScores[1].name} (${highScores[1].score} pts)` : "-";
+  document.getElementById("podium-3-name").textContent = highScores[2] ? `${highScores[2].name} (${highScores[2].score} pts)` : "-";
 
   const listEl = document.getElementById("leaderboard-list");
-  listEl.innerHTML = "";
-  
-  for (let i = 3; i < 10; i++) {
-    if (highScores[i]) {
+  if (listEl) {
+    listEl.innerHTML = "";
+    for (let i = 3; i < 10; i++) {
       const li = document.createElement("li");
-      li.textContent = `${highScores[i].name} - ${highScores[i].score} pts`;
+      if (highScores[i]) {
+        li.textContent = `${highScores[i].name} - ${highScores[i].score} pts`;
+      } else {
+        li.textContent = "---";
+      }
       listEl.appendChild(li);
     }
   }
