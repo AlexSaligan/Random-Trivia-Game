@@ -6,56 +6,77 @@ let timerInterval;
 let timeLeft = 10;
 const maxQuestions = 5;
 
-// SAMPLE QUESTIONS
 const questions = [
-  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 0 },
-  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 2 },
-  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 1 },
-  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 3 },
-  { q: "sample question", options: ["sample answer", "sample answer", "sample answer", "sample answer"], answer: 1 }
+  { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Hot Mail", "How To Make Lasagna", "Hyperlinks Text"], answer: 0 },
+  { q: "Which property changes the background color in CSS?", options: ["color", "bgcolor", "background-color", "background"], answer: 2 },
+  { q: "What symbol indicates an ID selector in CSS?", options: [".", "#", "*", ">"], answer: 1 },
+  { q: "Which keyword declares a variable in JavaScript?", options: ["var", "let", "const", "All of the above"], answer: 3 },
+  { q: "What function sets a repeating timer in JS?", options: ["setTimeout", "setInterval", "setTimer", "timeOut"], answer: 1 }
 ];
 
-const loginForm = document.getElementById('login-form');
-const usernameInput = document.getElementById('username');
-const screenLobby = document.getElementById('screen-lobby');
-const screenGameplay = document.getElementById('screen-gameplay');
-const screenLeaderboard = document.getElementById('screen-leaderboard');
-const timeDisplay = document.getElementById('time-display');
-const scoreDisplay = document.getElementById('score-display');
-const questionNumber = document.getElementById('question-number');
-const questionBox = document.getElementById('question-box');
-const answerBtns = document.querySelectorAll('.answer-btn');
-const playAgainBtn = document.getElementById('play-again-btn');
-const finalScore = document.getElementById('final-score');
+const loginForm = document.getElementById("login-form");
+const usernameInput = document.getElementById("username");
+const formError = document.getElementById("form-error");
+const formSuccess = document.getElementById("form-success");
 
+const timeDisplay = document.getElementById("time-display");
+const scoreDisplay = document.getElementById("score-display");
+const questionNumber = document.getElementById("question-number");
+const questionBox = document.getElementById("question-box");
+const answerBtns = document.querySelectorAll(".answer-btn");
 
-loginForm.addEventListener('submit', function(event) {
-  event.preventDefault(); 
-  currentPlayer = usernameInput.value.trim();
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const targetId = e.target.getAttribute("data-target");
+      switchScreen(targetId);
+      if (targetId === "screen-stats") renderStats();
+    });
+  });
+
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = usernameInput.value.trim();
+
+    if (value.length < 2) {
+      formError.textContent = "Please enter a nickname at least 2 characters long.";
+      formSuccess.textContent = "";
+      usernameInput.focus();
+    } else {
+      formError.textContent = "";
+      formSuccess.textContent = `Welcome, ${value}! Starting game...`;
+      currentPlayer = value;
+
+      setTimeout(() => {
+        formSuccess.textContent = "";
+        startGame();
+      }, 1000);
+    }
+  });
+
+  document.getElementById("play-again").addEventListener("click", () => {
+    switchScreen("screen-lobby");
+  });
+});
+
+function switchScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(s => {
+    s.classList.remove("active");
+    s.classList.add("hidden");
+  });
   
-  if (currentPlayer) {
-    localStorage.setItem('currentPlayer', currentPlayer);
-    switchScreen(screenLobby, screenGameplay);
-    startGame();
+  const targetScreen = document.getElementById(screenId);
+  if (targetScreen) {
+    targetScreen.classList.remove("hidden");
+    targetScreen.classList.add("active");
   }
-});
-
-playAgainBtn.addEventListener('click', function() {
-  switchScreen(screenLeaderboard, screenLobby);
-  usernameInput.value = "";
-});
-
-function switchScreen(oldScreen, newScreen) {
-  oldScreen.classList.remove('active');
-  oldScreen.classList.add('hidden');
-  newScreen.classList.remove('hidden');
-  newScreen.classList.add('active');
 }
 
 function startGame() {
   score = 0;
   currentQuestionIndex = 0;
   scoreDisplay.textContent = score;
+  switchScreen("screen-gameplay");
   loadQuestion();
 }
 
@@ -80,20 +101,15 @@ function loadQuestion() {
   timerInterval = setInterval(() => {
     timeLeft--;
     timeDisplay.textContent = timeLeft;
-    
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      questionBox.textContent = "Time's up!";
-      
-      setTimeout(() => {
-        handleAnswer(-1, currentQ.answer); 
-      }, 1000);
+      handleAnswer(-1, currentQ.answer); 
     }
   }, 1000);
 }
 
 function handleAnswer(selectedIndex, correctIndex) {
-  clearInterval(timerInterval); 
+  clearInterval(timerInterval);
   
   if (selectedIndex === correctIndex) {
     score += 100 + (timeLeft * 10);
@@ -101,11 +117,50 @@ function handleAnswer(selectedIndex, correctIndex) {
   
   scoreDisplay.textContent = score;
   currentQuestionIndex++;
-  
   setTimeout(loadQuestion, 500); 
 }
 
 function endGame() {
-  switchScreen(screenGameplay, screenLeaderboard);
-  finalScore.textContent = score;
+  switchScreen("screen-leaderboard");
+  saveScore();
+  renderLeaderboard();
+  document.getElementById("final-score").textContent = score;
+}
+
+function saveScore() {
+  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
+  highScores.push({ name: currentPlayer, score: score });
+  highScores.sort((a, b) => b.score - a.score);
+  localStorage.setItem("triviaScores", JSON.stringify(highScores));
+
+  let totalGames = parseInt(localStorage.getItem("totalGames") || "0", 10);
+  localStorage.setItem("totalGames", totalGames + 1);
+}
+
+function renderLeaderboard() {
+  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
+  
+  document.getElementById("podium-1-name").textContent = highScores[0] ? `${highScores[0].name}\n(${highScores[0].score} pts)` : "-";
+  document.getElementById("podium-2-name").textContent = highScores[1] ? `${highScores[1].name}\n(${highScores[1].score} pts)` : "-";
+  document.getElementById("podium-3-name").textContent = highScores[2] ? `${highScores[2].name}\n(${highScores[2].score} pts)` : "-";
+
+  const listEl = document.getElementById("leaderboard-list");
+  listEl.innerHTML = "";
+  
+  for (let i = 3; i < 10; i++) {
+    if (highScores[i]) {
+      const li = document.createElement("li");
+      li.textContent = `${highScores[i].name} - ${highScores[i].score} pts`;
+      listEl.appendChild(li);
+    }
+  }
+}
+
+function renderStats() {
+  const totalGames = localStorage.getItem("totalGames") || "0";
+  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
+  const topScore = highScores.length > 0 ? highScores[0].score : 0;
+
+  document.getElementById("stat-games").textContent = totalGames;
+  document.getElementById("stat-high-score").textContent = topScore;
 }
