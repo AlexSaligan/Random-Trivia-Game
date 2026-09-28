@@ -25,46 +25,45 @@ const questionBox = document.getElementById("question-box");
 const answerBtns = document.querySelectorAll(".answer-btn");
 const playAgainBtn = document.getElementById("play-again-btn");
 
-document.addEventListener("DOMContentLoaded", () => {
 
-  document.querySelectorAll(".nav-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const targetId = e.target.getAttribute("data-target");
-      switchScreen(targetId);
-      if (targetId === "screen-stats") renderStats();
-      if (targetId === "screen-leaderboard") renderLeaderboard();
-    });
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    const targetId = e.currentTarget.getAttribute("data-target"); 
+    switchScreen(targetId);
+    if (targetId === "screen-stats") renderStats();
+    if (targetId === "screen-leaderboard") renderLeaderboard();
   });
-
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const value = usernameInput.value.trim();
-
-    if (value.length < 2) {
-      formError.textContent = "Please enter a nickname at least 2 characters long.";
-      formSuccess.textContent = "";
-      usernameInput.focus();
-    } else {
-      formError.textContent = "";
-      formSuccess.textContent = `Welcome, ${value}! Starting game...`;
-      currentPlayer = value;
-
-      setTimeout(() => {
-        formSuccess.textContent = "";
-        startGame();
-      }, 800);
-    }
-  });
-
-  if (playAgainBtn) {
-    playAgainBtn.addEventListener("click", () => {
-      switchScreen("screen-lobby");
-      usernameInput.value = "";
-    });
-  }
-
-  renderLeaderboard();
 });
+
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const value = usernameInput.value.trim();
+
+  if (value.length < 2) {
+    formError.textContent = "Please enter a nickname at least 2 characters long.";
+    formSuccess.textContent = "";
+    usernameInput.focus();
+  } else {
+    formError.textContent = "";
+    formSuccess.textContent = `Welcome, ${value}! Starting game...`;
+    currentPlayer = value;
+
+    setTimeout(() => {
+      formSuccess.textContent = "";
+      startGame();
+    }, 800);
+  }
+});
+
+if (playAgainBtn) {
+  playAgainBtn.addEventListener("click", () => {
+    switchScreen("screen-lobby");
+    usernameInput.value = "";
+  });
+}
+
+renderLeaderboard();
+
 
 function switchScreen(screenId) {
   document.querySelectorAll(".screen").forEach(s => {
