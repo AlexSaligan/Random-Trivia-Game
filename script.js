@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerInterval = null;
   let timeLeft = 15;
 
-  let globalScores = [
+  // Base bot scores with slight randomization applied on load
+  const baseBots = [
     { name: "Sarah Jenkins", score: 1450 },
     { name: "Michael Miller", score: 1320 },
     { name: "David Ross", score: 1210 },
@@ -52,6 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: "Robert Thomas", score: 800 },
     { name: "Ashley Jackson", score: 750 }
   ];
+
+  function getInitialRandomizedBots() {
+    return baseBots.map(bot => {
+      const randomOffset = Math.floor(Math.random() * 41) - 20; // Adds between -20 and +20 points
+      return { name: bot.name, score: bot.score + randomOffset };
+    });
+  }
+
+  let globalScores = getInitialRandomizedBots();
+  globalScores.sort((a, b) => b.score - a.score);
 
   const questions = [
     { q: "Which planet in our solar system has the most confirmed moons?", options: ["Jupiter", "Saturn", "Neptune", "Uranus"], answer: 1 },
@@ -206,14 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getStoredLeaderboard() {
     const data = localStorage.getItem('trivia_leaderboard');
-    if (data) {
-      try {
-        globalScores = JSON.parse(data);
-      } catch (e) {
-        // fallback
-      }
+    if (!data) {
+      localStorage.setItem('trivia_leaderboard', JSON.stringify(globalScores));
+      return globalScores;
     }
-    return globalScores;
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return globalScores;
+    }
   }
 
   function saveScore() {
