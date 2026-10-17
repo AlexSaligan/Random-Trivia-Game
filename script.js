@@ -216,17 +216,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getStoredLeaderboard() {
-    const data = localStorage.getItem('trivia_leaderboard');
-    if (!data) {
+  const data = localStorage.getItem('trivia_leaderboard');
+  if (!data) {
+    localStorage.setItem('trivia_leaderboard', JSON.stringify(globalScores));
+    return globalScores;
+  }
+  try {
+    const parsed = JSON.parse(data);
+    if (!Array.isArray(parsed) || parsed.length === 0) {
       localStorage.setItem('trivia_leaderboard', JSON.stringify(globalScores));
       return globalScores;
     }
-    try {
-      return JSON.parse(data);
-    } catch (e) {
-      return globalScores;
-    }
+    return parsed;
+  } catch (e) {
+    localStorage.setItem('trivia_leaderboard', JSON.stringify(globalScores));
+    return globalScores;
   }
+}
 
   function saveScore() {
     let lb = getStoredLeaderboard();
