@@ -122,10 +122,22 @@ p {
   margin-top: 5px;
 }
 
+.section-banner {
+  max-width: 180px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
 .thanks-img {
   max-width: 200px;
   height: auto;
   margin: 15px 0;
+}
+
+.stats-img {
+  max-width: 160px;
+  height: auto;
+  margin-top: 15px;
 }
 
 .btn-primary {
@@ -321,7 +333,7 @@ input:focus {
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: center;
+  just-content: center;
 }
 
 .first .block { height: 100px; background-color: #ffcb05; color: #000; }
@@ -353,8 +365,10 @@ input:focus {
   background-color: #330e6b;
   padding: 15px 25px;
   border-radius: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 1px solid #864cbf;
+  width: 100%;
+  max-width: 320px;
 }
 
 a {
