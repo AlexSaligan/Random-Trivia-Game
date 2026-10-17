@@ -274,12 +274,30 @@ input:focus {
   opacity: 0.5;
 }
 
+.leaderboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 750px;
+  margin: 15px auto;
+  flex-wrap: wrap;
+}
+
+.podium-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .podium {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
   height: 160px;
 }
 
@@ -311,15 +329,24 @@ input:focus {
 .third .block { height: 50px; background-color: #cd7f32; color: #ffffff; }
 
 .top-ten {
-  margin-top: 15px;
+  margin-top: 10px;
   width: 100%;
-  max-width: 400px;
+  max-width: 260px;
   text-align: left;
+  background-color: #330e6b;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #864cbf;
+}
+
+.top-ten h3 {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 .top-ten ol {
   margin-left: 25px;
-  margin-top: 10px;
 }
 
 .stats-card {
@@ -380,5 +407,10 @@ a:hover, a:focus {
   .nav-btn {
     padding: 6px 10px;
     font-size: 0.8rem;
+  }
+
+  .leaderboard-wrapper {
+    flex-direction: column;
+    align-items: center;
   }
 }
