@@ -40,82 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerInterval = null;
   let timeLeft = 15;
 
+  let globalScores = [
+    { name: "Sarah Jenkins", score: 1450 },
+    { name: "Michael Miller", score: 1320 },
+    { name: "David Ross", score: 1210 },
+    { name: "Emily Davis", score: 1150 },
+    { name: "James Wilson", score: 1080 },
+    { name: "Jessica Taylor", score: 990 },
+    { name: "Daniel Anderson", score: 920 },
+    { name: "Amanda Martinez", score: 850 },
+    { name: "Robert Thomas", score: 800 },
+    { name: "Ashley Jackson", score: 750 }
+  ];
+
   const questions = [
-    {
-      question: "What is the capital of France?",
-      options: ["London", "Berlin", "Paris", "Madrid"],
-      answer: 2
-    },
-    {
-      question: "Which planet is known as the Red Planet?",
-      options: ["Venus", "Mars", "Jupiter", "Saturn"],
-      answer: 1
-    },
-    {
-      question: "What is the largest ocean on Earth?",
-      options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
-      answer: 3
-    },
-    {
-      question: "Which element has the chemical symbol 'O'?",
-      options: ["Gold", "Oxygen", "Silver", "Iron"],
-      answer: 1
-    },
-    {
-      question: "Who wrote 'Romeo and Juliet'?",
-      options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"],
-      answer: 2
-    },
-    {
-      question: "What is the speed of light approximately?",
-      options: ["300,000 km/s", "150,000 km/s", "3,000 km/s", "30,000 km/s"],
-      answer: 0
-    },
-    {
-      question: "Which country is home to the kangaroo?",
-      options: ["New Zealand", "South Africa", "Australia", "Brazil"],
-      answer: 2
-    },
-    {
-      question: "What is the hardest natural substance on Earth?",
-      options: ["Gold", "Iron", "Diamond", "Platinum"],
-      answer: 2
-    },
-    {
-      question: "How many continents are there on Earth?",
-      options: ["5", "6", "7", "8"],
-      answer: 2
-    },
-    {
-      question: "What is the main ingredient in guacamole?",
-      options: ["Tomato", "Avocado", "Pepper", "Onion"],
-      answer: 1
-    },
-    {
-      question: "Which musical instrument has 88 keys?",
-      options: ["Guitar", "Violin", "Piano", "Flute"],
-      answer: 2
-    },
-    {
-      question: "What is the tallest mammal in the world?",
-      options: ["Elephant", "Giraffe", "Blue Whale", "Horse"],
-      answer: 1
-    },
-    {
-      question: "In which year did the Titanic sink?",
-      options: ["1912", "1905", "1920", "1898"],
-      answer: 0
-    },
-    {
-      question: "What is the chemical symbol for gold?",
-      options: ["Ag", "Fe", "Au", "Pb"],
-      answer: 2
-    },
-    {
-      question: "Which planet is closest to the Sun?",
-      options: ["Venus", "Earth", "Mercury", "Mars"],
-      answer: 2
-    }
+    { q: "Which planet in our solar system has the most confirmed moons?", options: ["Jupiter", "Saturn", "Neptune", "Uranus"], answer: 1 },
+    { q: "What is the smallest ocean in the world?", options: ["Indian Ocean", "Southern Ocean", "Arctic Ocean", "Atlantic Ocean"], answer: 2 },
+    { q: "Who wrote the dystopian novel '1984'?", options: ["George Orwell", "Aldous Huxley", "Ray Bradbury", "H.G. Wells"], answer: 0 },
+    { q: "Which element on the periodic table has the atomic number 1?", options: ["Helium", "Hydrogen", "Carbon", "Oxygen"], answer: 1 },
+    { q: "In which country can you visit the ancient landmark Machu Picchu?", options: ["Chile", "Colombia", "Peru", "Brazil"], answer: 2 },
+    { q: "How many bones are in the adult human body?", options: ["186", "206", "226", "246"], answer: 1 },
+    { q: "Which country gifted the Statue of Liberty to the United States?", options: ["Great Britain", "France", "Spain", "Germany"], answer: 1 },
+    { q: "What is the capital city of Canada?", options: ["Toronto", "Vancouver", "Montreal", "Ottawa"], answer: 3 },
+    { q: "Which movie won the very first Academy Award for Best Animated Feature in 2002?", options: ["Toy Story", "Shrek", "Finding Nemo", "Monsters, Inc."], answer: 1 },
+    { q: "What is the chemical formula for table salt?", options: ["KCl", "NaCl", "NaOH", "CO2"], answer: 1 },
+    { q: "Which famous artist painted 'The Starry Night'?", options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Salvador Dalí"], answer: 0 },
+    { q: "Which European city hosted the 2012 Summer Olympic Games?", options: ["Beijing", "London", "Rio de Janeiro", "Athens"], answer: 1 },
+    { q: "What is the official currency used in the United Kingdom?", options: ["Euro", "Dollar", "Pound Sterling", "Franc"], answer: 2 },
+    { q: "Which organ in the human body produces insulin?", options: ["Liver", "Kidney", "Pancreas", "Gallbladder"], answer: 2 },
+    { q: "What is the highest mountain peak in North America?", options: ["Mount Rainier", "Denali", "Mount Whitney", "Mount Elbert"], answer: 1 }
   ];
 
   if (loginForm) {
@@ -169,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('time-display').textContent = timeLeft;
     document.getElementById('question-number').textContent = currentQuestionIndex + 1;
 
-    const q = questions[currentQuestionIndex];
-    document.getElementById('question-box').textContent = q.question;
+    const qObj = questions[currentQuestionIndex];
+    document.getElementById('question-box').textContent = qObj.q;
 
     const answerBtns = document.querySelectorAll('.answer-btn');
     answerBtns.forEach((btn) => {
@@ -183,9 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const freshBtns = document.querySelectorAll('.answer-btn');
     freshBtns.forEach((btn, index) => {
-      btn.textContent = q.options[index];
+      btn.textContent = qObj.options[index];
       btn.addEventListener('click', () => {
-        handleAnswer(index, q.answer);
+        handleAnswer(index, qObj.answer);
       });
     });
 
@@ -208,8 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const freshBtns = document.querySelectorAll('.answer-btn');
     freshBtns.forEach(b => b.classList.add('disabled'));
     
-    const q = questions[currentQuestionIndex];
-    freshBtns[q.answer].classList.add('correct');
+    const qObj = questions[currentQuestionIndex];
+    freshBtns[qObj.answer].classList.add('correct');
 
     setTimeout(() => {
       currentQuestionIndex++;
@@ -244,58 +197,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function endGame() {
     clearInterval(timerInterval);
+    saveScore();
+    renderLeaderboard();
     document.getElementById('final-score').textContent = currentScore;
-    
-    saveGameResult(currentUser, currentScore);
-    updateLeaderboardUI();
     updateStatsOnGameEnd(currentScore);
-
     switchScreen('screen-leaderboard');
   }
 
   function getStoredLeaderboard() {
     const data = localStorage.getItem('trivia_leaderboard');
-    if (!data) {
-      const defaultBots = [
-        { name: "Sarah Jenkins", score: 1452, date: new Date().toISOString() },
-        { name: "Michael Miller", score: 1313, date: new Date().toISOString() },
-        { name: "David Ross", score: 1203, date: new Date().toISOString() },
-        { name: "Emily Watson", score: 1100, date: new Date().toISOString() },
-        { name: "James Smith", score: 950, date: new Date().toISOString() },
-        { name: "Jessica Taylor", score: 820, date: new Date().toISOString() },
-        { name: "Daniel Brown", score: 750, date: new Date().toISOString() }
-      ];
-      localStorage.setItem('trivia_leaderboard', JSON.stringify(defaultBots));
-      return defaultBots;
+    if (data) {
+      try {
+        globalScores = JSON.parse(data);
+      } catch (e) {
+        // fallback
+      }
     }
-    return JSON.parse(data);
+    return globalScores;
   }
 
-  function saveGameResult(name, score) {
+  function saveScore() {
     let lb = getStoredLeaderboard();
-    lb.push({ name, score, date: new Date().toISOString() });
+    if (currentUser) {
+      lb.push({ name: currentUser, score: currentScore });
+    }
     lb.sort((a, b) => b.score - a.score);
     lb = lb.slice(0, 10);
+    globalScores = lb;
     localStorage.setItem('trivia_leaderboard', JSON.stringify(lb));
+
+    let totalGames = parseInt(localStorage.getItem('totalGames') || '0', 10);
+    localStorage.setItem('totalGames', totalGames + 1);
   }
 
-  function updateLeaderboardUI() {
+  function renderLeaderboard() {
     const lb = getStoredLeaderboard();
     
-    const p1Name = document.getElementById('podium-1-name');
-    const p2Name = document.getElementById('podium-2-name');
-    const p3Name = document.getElementById('podium-3-name');
+    const p1 = document.getElementById('podium-1-name');
+    const p2 = document.getElementById('podium-2-name');
+    const p3 = document.getElementById('podium-3-name');
 
-    p1Name.textContent = lb[0] ? `${lb[0].name}\n(${lb[0].score} pts)` : '-';
-    p2Name.textContent = lb[1] ? `${lb[1].name}\n(${lb[1].score} pts)` : '-';
-    p3Name.textContent = lb[2] ? `${lb[2].name}\n(${lb[2].score} pts)` : '-';
+    if (p1) p1.textContent = lb[0] ? `${lb[0].name}\n(${lb[0].score} pts)` : '-';
+    if (p2) p2.textContent = lb[1] ? `${lb[1].name}\n(${lb[1].score} pts)` : '-';
+    if (p3) p3.textContent = lb[2] ? `${lb[2].name}\n(${lb[2].score} pts)` : '-';
 
     const listEl = document.getElementById('leaderboard-list');
-    listEl.innerHTML = '';
-    for (let i = 3; i < lb.length; i++) {
-      const li = document.createElement('li');
-      li.textContent = `${lb[i].name} - ${lb[i].score} pts`;
-      listEl.appendChild(li);
+    if (listEl) {
+      listEl.innerHTML = '';
+      for (let i = 3; i < 10; i++) {
+        const li = document.createElement('li');
+        if (lb[i]) {
+          li.textContent = `${lb[i].name} - ${lb[i].score} pts`;
+        } else {
+          li.textContent = '---';
+        }
+        listEl.appendChild(li);
+      }
     }
   }
 
@@ -328,6 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  updateLeaderboardUI();
+  renderLeaderboard();
   renderStatsUI();
 });
