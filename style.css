@@ -115,23 +115,10 @@ p {
   margin-top: 5px;
 }
 
-.section-banner {
-  max-width: 250px;
-  height: auto;
-  margin-bottom: 15px;
-}
-
 .thanks-img {
   max-width: 200px;
   height: auto;
   margin: 15px 0;
-}
-
-.footer-trivia-img {
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 10px;
-  border-radius: 4px;
 }
 
 .btn-primary {
