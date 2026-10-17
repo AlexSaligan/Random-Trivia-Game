@@ -255,7 +255,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getStoredLeaderboard() {
     const data = localStorage.getItem('trivia_leaderboard');
-    return data ? JSON.parse(data) : [];
+    if (!data) {
+      const defaultBots = [
+        { name: "Sarah Jenkins", score: 1452, date: new Date().toISOString() },
+        { name: "Michael Miller", score: 1313, date: new Date().toISOString() },
+        { name: "David Ross", score: 1203, date: new Date().toISOString() },
+        { name: "Emily Watson", score: 1100, date: new Date().toISOString() },
+        { name: "James Smith", score: 950, date: new Date().toISOString() },
+        { name: "Jessica Taylor", score: 820, date: new Date().toISOString() },
+        { name: "Daniel Brown", score: 750, date: new Date().toISOString() }
+      ];
+      localStorage.setItem('trivia_leaderboard', JSON.stringify(defaultBots));
+      return defaultBots;
+    }
+    return JSON.parse(data);
   }
 
   function saveGameResult(name, score) {
