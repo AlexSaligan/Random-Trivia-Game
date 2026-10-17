@@ -4,6 +4,22 @@ let currentQuestionIndex = 0;
 let timerInterval;
 let timeLeft = 10;
 
+// bot scores 
+let globalScores = [
+  { name: "Sarah Jenkins", score: 1450 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Michael Miller", score: 1320 + Math.floor(Math.random() * 51) - 25 },
+  { name: "David Ross", score: 1210 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Emily Davis", score: 1150 + Math.floor(Math.random() * 51) - 25 },
+  { name: "James Wilson", score: 1080 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Jessica Taylor", score: 990 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Daniel Anderson", score: 920 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Amanda Martinez", score: 850 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Robert Thomas", score: 800 + Math.floor(Math.random() * 51) - 25 },
+  { name: "Ashley Jackson", score: 750 + Math.floor(Math.random() * 51) - 25 }
+];
+globalScores.sort((a, b) => b.score - a.score);
+
+// QUESTIONS
 const questions = [
   { q: "Which planet in our solar system has the most confirmed moons?", options: ["Jupiter", "Saturn", "Neptune", "Uranus"], answer: 1 },
   { q: "What is the smallest ocean in the world?", options: ["Indian Ocean", "Southern Ocean", "Arctic Ocean", "Atlantic Ocean"], answer: 2 },
@@ -163,29 +179,31 @@ function endGame() {
 }
 
 function saveScore() {
-  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
-  highScores.push({ name: currentPlayer, score: score });
-  highScores.sort((a, b) => b.score - a.score);
-  localStorage.setItem("triviaScores", JSON.stringify(highScores.slice(0, 10)));
+  globalScores.push({ name: currentPlayer, score: score });
+  globalScores.sort((a, b) => b.score - a.score);
+  globalScores = globalScores.slice(0, 10);
 
   let totalGames = parseInt(localStorage.getItem("totalGames") || "0", 10);
   localStorage.setItem("totalGames", totalGames + 1);
+
+  let personalHigh = parseInt(localStorage.getItem("personalHighScore") || "0", 10);
+  if (score > personalHigh) {
+    localStorage.setItem("personalHighScore", score);
+  }
 }
 
 function renderLeaderboard() {
-  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
-  
-  document.getElementById("podium-1-name").textContent = highScores[0] ? `${highScores[0].name} (${highScores[0].score} pts)` : "-";
-  document.getElementById("podium-2-name").textContent = highScores[1] ? `${highScores[1].name} (${highScores[1].score} pts)` : "-";
-  document.getElementById("podium-3-name").textContent = highScores[2] ? `${highScores[2].name} (${highScores[2].score} pts)` : "-";
+  document.getElementById("podium-1-name").textContent = globalScores[0] ? `${globalScores[0].name}\n(${globalScores[0].score} pts)` : "-";
+  document.getElementById("podium-2-name").textContent = globalScores[1] ? `${globalScores[1].name}\n(${globalScores[1].score} pts)` : "-";
+  document.getElementById("podium-3-name").textContent = globalScores[2] ? `${globalScores[2].name}\n(${globalScores[2].score} pts)` : "-";
 
   const listEl = document.getElementById("leaderboard-list");
   if (listEl) {
     listEl.innerHTML = "";
     for (let i = 3; i < 10; i++) {
       const li = document.createElement("li");
-      if (highScores[i]) {
-        li.textContent = `${highScores[i].name} - ${highScores[i].score} pts`;
+      if (globalScores[i]) {
+        li.textContent = `${globalScores[i].name} - ${globalScores[i].score} pts`;
       } else {
         li.textContent = "---";
       }
@@ -196,9 +214,8 @@ function renderLeaderboard() {
 
 function renderStats() {
   const totalGames = localStorage.getItem("totalGames") || "0";
-  const highScores = JSON.parse(localStorage.getItem("triviaScores")) || [];
-  const topScore = highScores.length > 0 ? highScores[0].score : 0;
+  const personalHigh = localStorage.getItem("personalHighScore") || "0";
 
   document.getElementById("stat-games").textContent = totalGames;
-  document.getElementById("stat-high-score").textContent = topScore;
+  document.getElementById("stat-high-score").textContent = personalHigh;
 }
