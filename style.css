@@ -327,6 +327,7 @@ input:focus {
   margin-bottom: 5px;
   text-align: center;
   width: 100%;
+  white-space: pre-line; 
 }
 
 .place .block {
