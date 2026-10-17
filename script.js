@@ -2,7 +2,7 @@ let currentPlayer = "";
 let score = 0;
 let currentQuestionIndex = 0;
 let timerInterval;
-let timeLeft = 10;
+let timeLeft = 15;
 
 // bot scores 
 let globalScores = [
