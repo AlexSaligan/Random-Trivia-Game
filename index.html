@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alex's Random Trivia - Fast-paced trivia quiz game.">
+  <meta name="description" content="Alex's Random Trivia - Fast-paced trivia quiz game with local leaderboards.">
   <title>Alex's Random Trivia</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +17,7 @@
       <nav aria-label="Main Navigation">
         <ul class="nav-links">
           <li><button type="button" class="nav-btn" data-target="screen-lobby">Lobby</button></li>
-          <li><button type="button" class="nav-btn" data-target="screen-rules">Rules</button></li>
+          <li><button type="button" class="nav-btn" data-target="screen-rules">How to Play</button></li>
           <li><button type="button" class="nav-btn" data-target="screen-leaderboard">Leaderboard</button></li>
           <li><button type="button" class="nav-btn" data-target="screen-stats">Stats</button></li>
         </ul>
@@ -26,7 +26,6 @@
   </header>
 
   <main>
-    
     <section id="screen-lobby" class="screen active">
       <div class="center-content">
         <h1>Alex's Random Trivia</h1>
@@ -34,7 +33,7 @@
 
         <form id="login-form" novalidate>
           <label for="username" class="sr-only">Enter Username</label>
-          <input type="text" id="username" name="username" placeholder="Enter Nickname" required minlength="2" maxlength="15">
+          <input type="text" id="username" name="username" placeholder="Enter Nickname" required minlength="2" maxlength="15" aria-required="true">
           <p class="gdpr-text">Your nickname is saved locally on your device.</p>
           
           <div id="form-error" class="error-msg" aria-live="polite"></div>
@@ -47,7 +46,6 @@
 
     <section id="screen-rules" class="screen hidden">
       <div class="center-content">
-        <img src="rules-banner.png" alt="How to Play Trivia" class="section-banner">
         <h2>How to Play</h2>
         <p>Answer questions before the 10-second timer runs out to earn speed bonus points!</p>
         
@@ -148,16 +146,14 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="bottom-bar">
-    <img src="trivia-banner.png" alt="Trivia Fun" class="footer-trivia-img">
-    <p>&copy; Alex's Random Trivia | External Trivia Links:</p>
+    <p>&copy; Alex's Random Trivia</p>
     <div class="footer-links">
       <a href="https://opentdb.com/" target="_blank" rel="noopener">Open Trivia DB</a> |
       <a href="https://en.wikipedia.org/wiki/Trivia" target="_blank" rel="noopener">Wikipedia Trivia History</a> |
-      <a href="https://www.sporcle.com/" target="_blank" rel="noopener">Sporcle Quizzes</a>
+      <a href="https://kahoot.com/" target="_blank" rel="noopener">Kahoot!</a>
     </div>
   </footer>
   
